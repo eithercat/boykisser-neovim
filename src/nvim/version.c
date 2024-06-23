@@ -2723,6 +2723,45 @@ bool may_show_intro(void)
           && (vim_strchr(p_shm, SHM_INTRO) == NULL));
 }
 
+static char *(lines[]) = {
+  "⠀⠀⠀⣰⠶⣄⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⣠⠶⠲⣄⠀", /* 00 */
+  "⠀⠀⣠⡟⠀⠈⠙⢦⣄⠀⠀⠀⠀⠀⠀⠀⠀⠀⡶⣤⣀⠀⠀⠀⠀⠀⠀⠀⠀⣠⡾⠋⠁⠀ ⢻⡄", /* 01 */
+  "⠀⢀⡿⠀⠀⠀⠀⠀⠙⠷⣄⣀⣤⠤⠤⠤⠤⢤⣷⡀⠙⢷⡄⠀⠀⠀⠀⣠⠞⠉⠀⠀⠀⠀⠀⠈⣷", /* 02 */
+  "⠀⢸⡇⠀⠀⠀⠀⠀⠀⠀⠈⠳⣄⠀⠀⠀⠀⠀⠈⠁⠀⠀⠹⣦⡀⣠⡞⠁⠀⠀⠀⠀⠀⠀⠀⠀⣿", /* 03 */
+  "⠀⣾⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⠃⠀⠀⠀⠀⠀⠀⠀ ⠀⠈⣻⠏⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣿", /* 04 */
+  "⠀⣿⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢠⡟", /* 05 */
+  "⠀⣿⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣾⠁", /* 06 */
+  "⠀⢿⠀⠀⠀⠀⣤⣤⣤⣀⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣀⣤⣤⣤⣤⣤⡀⠀⠀⠀⠀⠀⣸⠇⠀", /* 07 */
+  "⠀⠘⣇⠀⠀⠀⠀⠉⠉⠛⠛⢿⣶⣦⠀⠀⠀⠀⠀⠀⢴⣾⣟⣛⡋⠉⠉⠉⠁⠀⠀⠀⠀⣴⠏⠀⠀", /* 08 */
+  "⣀ ⠙⢷⡄⠀⠀⣀⣤⣶⣾⠿⠋⠁⠀⠴⠶⠶⠄⠀⠀⠉⠙⠻⠿⣿⣷⣶⡄⠀⠀⠴⠾⠛⠛⣹⠇", /* 09 */
+  "⢿⡍⠉⠉⠉⠀⠀⠈⠉⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀ ⠀⠀⠀⣤⠶⣆⣠⡤⠄⢀⣤⠞⠁⠀", /* 10 */
+  "⠈⠻⣆⡀⠶⢻⣇⡴⠖⠀⠀⠀⣴⡀⣀⡴⠚⠳⠦⣤⣤⠾⠃⠀⠀⠀⠀⠘⠟⠋⠀⠀⠀⢻⣄⠀⠀", /* 11 */
+  "⠀⠀⣼⠃⠀⠀⠉⠁⠀⠀⠀⠀⠈⠉⢻⡆⠀⠀⠀⠀⣿⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢻⡄⠀", /* 12 */
+  "⠀⢠⡇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⣿⡀⠀⠀ ⣿⠀⠀⠀⠀⠀⠀⠀⠀⣀⡶⠶⠟⠛⠛⠁⠀", /* 13 */
+  "⠀⣾⡴⠖⠛⠳⢦⣿⠲⣄⣀⠀⠀⠀⠀⠘⢷⣀⠀⣸⠃⠀⠀⠀⣀⣀⣤⠶⠚⠉⠀⠀⠀⠀⠀⠀⠀", /* 14 */
+  "⠀⠀⠀⠀⠀⠀⠀⠈⢷⡀⠈⠻⠦⠀⠀⠀⠀⠉⠉⠁⠀⠀⠀⠀⠹⣆⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀", /* 15 */
+  "⠀⠀⠀⠀⠀⠀⠀⢀⡴⠟⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⢳⡄⠀⠀⠀⠀⠀⠀⠀⠀⠀", /* 16 */
+  "⠀⠀⠀⠀⠀⠀⢠⡟⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠻⡄⠀⠀⠀⠀⠀⠀⠀⠀", /* 17 */
+  "⠀⠀⠀⠀⠀⠀⠈⠉⠛⠛⢲⡖⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢻⡆⠀⠀⠀⠀⠀⠀⠀", /* 18 */
+  "⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢸⡇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢸⡇⠀⠀⠀⠀⠀⠀⠀", /* 19 */
+  "⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀ ⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈        ", /* 20 */
+  /*0         1         2         3      */
+  /*0123456789012345678901234567890123456*/
+};
+
+#define BLUSHES_SIZE 4
+struct blush {
+  int row;
+  char *value;
+};
+
+static struct blush blushes[BLUSHES_SIZE] = {
+  {11, "⠶⢻⣇⡴⠖" },
+  {12,   "⠉⠁"  },
+  {10, "⣤⠶⣆⣠⡤⠄"},
+  {11,  "⠘⠟⠋"  },
+};
+
 /// Give an introductory message about Vim.
 /// Only used when starting Vim on an empty file, without a file name.
 /// Or with the ":intro" command (for Sven :-).
@@ -2730,23 +2769,6 @@ bool may_show_intro(void)
 /// @param colon true for ":intro"
 void intro_message(bool colon)
 {
-  static char *(lines[]) = {
-    N_(NVIM_VERSION_LONG),
-    "",
-    N_("Nvim is open source and freely distributable"),
-    "https://neovim.io/#chat",
-    "",
-    N_("type  :help nvim<Enter>       if you are new! "),
-    N_("type  :checkhealth<Enter>     to optimize Nvim"),
-    N_("type  :q<Enter>               to exit         "),
-    N_("type  :help<Enter>            for help        "),
-    "",
-    N_("type  :help news<Enter> to see changes in v%s.%s"),
-    "",
-    N_("Help poor children in Uganda!"),
-    N_("type  :help iccf<Enter>       for information "),
-  };
-
   // blanklines = screen height - # message lines
   size_t lines_size = ARRAY_SIZE(lines);
   assert(lines_size <= LONG_MAX);
@@ -2790,7 +2812,7 @@ void intro_message(bool colon)
       }
 
       if (*mesg != NUL) {
-        do_intro_line(row, mesg, colon);
+        do_intro_line(row, mesg, colon, blanklines);
       }
       row++;
 
@@ -2801,7 +2823,7 @@ void intro_message(bool colon)
   }
 }
 
-static void do_intro_line(int row, char *mesg, bool colon)
+static void do_intro_line(int row, char *mesg, bool colon, int blanklines)
 {
   int l;
 
@@ -2820,15 +2842,32 @@ static void do_intro_line(int row, char *mesg, bool colon)
   }
 
   grid_line_start(grid, row);
-  // Split up in parts to highlight <> items differently.
+
   for (char *p = mesg; *p != NUL; p += l) {
-    for (l = 0;
-         p[l] != NUL && (l == 0 || (p[l] != '<' && p[l - 1] != '>'));
-         l++) {
-      l += utfc_ptr2len(p + l) - 1;
+    for (l = 0; p[l] != NUL && l == 0; l++) {
+      l += utf_ptr2len(p + l) - 1;
     }
     assert(row <= INT_MAX && col <= INT_MAX);
-    col += grid_line_puts(col, p, l, *p == '<' ? HL_ATTR(HLF_8) : 0);
+
+    bool is_blushing = false;
+    for (int b = 0; b < BLUSHES_SIZE; b++) {
+      if (blushes[b].row != row - blanklines/2) {
+        continue;
+      }
+
+      char *blush = blushes[b].value;
+      u_long blush_len = strlen(blush);
+
+      for (int offset = 0; offset < (int)blush_len; offset++) {
+        if (strncmp(p - offset, blush, blush_len) == 0) {
+          is_blushing = true;
+          goto grid_line_puts_time;
+        }
+      }
+    }
+
+    grid_line_puts_time:
+    col += grid_line_puts(col, p, l, is_blushing ? HL_ATTR(HLF_E) : 0);
   }
   grid_line_flush();
 }
